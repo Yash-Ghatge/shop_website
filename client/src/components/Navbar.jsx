@@ -23,6 +23,7 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
         <NavLink to="/products">Products</NavLink>
         <NavLink to="/">Contact</NavLink>
+        
 
         <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
           <input
@@ -47,6 +48,7 @@ const Navbar = () => {
         <button className="cursor-pointer px-8 py-2 bg-primary hover:bg-primary-dull transition text-white rounded-full">
           Login
         </button>
+       
       </div>
 
       <button
