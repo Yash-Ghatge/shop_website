@@ -6,7 +6,7 @@ const AppContext = createContext();
 
 const AppContextProvider = ({ children }) => {
 
-  const currency = import.meta.VITE_CCURRENCY;
+  const currency = import.meta.env.VITE_CCURRENCY;
 
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
