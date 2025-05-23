@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 
+
 export const register = async(req,res)=>{
     try{
         const {name,email,password} =req.body;
@@ -82,6 +83,7 @@ export const isAuth = async(req,res)=>{
         res.json({success:false,message:error.message});
     }
 }
+
 
 export const logout = async(req,res)=>{
     try {

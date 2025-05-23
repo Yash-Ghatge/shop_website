@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 const authUser = async(req,res,next )=>{
     const {token} = req.cookies;
@@ -8,7 +9,7 @@ const authUser = async(req,res,next )=>{
     }
 
     try {
-        const tokenDecode = jwt.verify(token,process.env.jwt)
+        const tokenDecode = jwt.verify(token,process.env.JWT)
         if(tokenDecode.id){
             req.body.userId = tokenDecode.id;
         }
