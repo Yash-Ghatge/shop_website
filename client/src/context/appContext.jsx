@@ -140,6 +140,7 @@ const AppContextProvider = ({ children }) => {
 
 
   const value = {
+    setCartItems,
     navigate,
     user,
     setUser,

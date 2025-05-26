@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 const Cart = () => {
 
-    const {products,currency,cartItems,removeFromcart,getCartCount,updateCartItem,navigate,getCartAmount,axios,user} = useAppContext();
+    const {products,currency,cartItems,removeFromcart,getCartCount,updateCartItem,navigate,getCartAmount,axios,user,setCartItems} = useAppContext();
     const [cartArray,setCartArray] = useState([])
     const [addresses,setAddresses] = useState([])
     const [showAddress, setShowAddress] = useState(false)
@@ -13,14 +13,18 @@ const Cart = () => {
     const [paymentOption,setPaymentOption] =useState("COD")
 
     const getCart = () => {
-        let tempArray = []
-        for(const key in cartItems){
-            const product = products.find((item)=>item._id === key)
-            product.quantity = cartItems[key]
-            tempArray.push(product)
+    let tempArray = [];
+    for (const key in cartItems) {
+        const foundProduct = products.find((item) => item._id === key);
+        if (foundProduct) {
+            tempArray.push({
+                ...foundProduct, // clone product
+                quantity: cartItems[key] // add quantity separately
+            });
         }
-        setCartArray(tempArray)
     }
+    setCartArray(tempArray);
+};
 
     const getUserAddress = async()=>{
         try {
@@ -39,7 +43,40 @@ const Cart = () => {
     }
 
     const placeOrder = async() =>{
+        try {
+            if (!selectedAddress) {
+                return toast.error("Please select an address")
+            }
+            if (paymentOption === "COD") {
+                const { data } = await axios.post('/api/order/cod',{
+                    userId:user._id,
+                    items:cartArray.map(item=>({product:item._id,quantity:item.quantity})),
+                    address:selectedAddress._id
+                })
 
+                if(data.success){
+                    toast.success(data.message)
+                    setCartItems({})
+                    navigate('/my-orders')
+                }else{
+                    toast.error(data.message)
+                }
+            }else{
+                 const { data } = await axios.post('/api/order/stripe',{
+                    userId:user._id,
+                    items:cartArray.map(item=>({product:item._id,quantity:item.quantity})),
+                    address:selectedAddress._id
+                })
+
+                if(data.success){
+                    window.location.replace(data.url)
+                }else{
+                    toast.error(data.message)
+                }
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
     useEffect(()=>{
@@ -154,7 +191,7 @@ const Cart = () => {
                     </p>
                 </div>
 
-                <button onClick={placeOrder()} className="w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:bg-primary-dull transition">
+                <button onClick={() => placeOrder()} className="w-full py-3 mt-6 cursor-pointer bg-primary text-white font-medium hover:bg-primary-dull transition">
                     {paymentOption === "COD" ? "Place Order" : "Proceed To Checkout"}
                 </button>
             </div>
