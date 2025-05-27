@@ -122,6 +122,9 @@ const AppContextProvider = ({ children }) => {
     
   },[])
   
+
+  // update cart
+
   useEffect(()=>{
     const updateCart = async () => {
       try {
