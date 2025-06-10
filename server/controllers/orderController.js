@@ -15,19 +15,6 @@ export const placeOrderCOD = async (req, res) => {
         }
 
         
-        let finalItems = await Promise.all(items.map(async (item) => {
-            const product = await Product.findById(item.product);
-            if (!product) {
-                throw new Error(`Product not found: ${item.product}`);
-            }
-            return {
-                product: item.product,
-                quantity: item.quantity,
-                sellerId: product.sellerId 
-            };
-        }));
-
-        
         let amount = await finalItems.reduce(async (acc, item) => {
             const product = await Product.findById(item.product);
             return (await acc) + product.offerPrice * item.quantity;
@@ -37,7 +24,7 @@ export const placeOrderCOD = async (req, res) => {
     
         await Order.create({
             userId,
-            items: finalItems,
+            items,
             amount,
             address,
             paymentType: "COD",
@@ -61,17 +48,7 @@ export const placeOrderStripe = async (req,res) => {
         if(!address || !items.length === 0 ){
             return res.json({success:false,message:"Invaild data"})
         }
-        let finalItems = await Promise.all(items.map(async (item) => {
-            const product = await Product.findById(item.product);
-            if (!product) {
-                throw new Error(`Product not found: ${item.product}`);
-            }
-            return {
-                product: item.product,
-                quantity: item.quantity,
-                sellerId: product.sellerId 
-            };
-        }));
+        
 
         let productData = [];
 
@@ -88,7 +65,7 @@ export const placeOrderStripe = async (req,res) => {
 
         const order = await Order.create({
             userId,
-            items:finalItems,
+            items,
             amount,
             address,
             paymentType:"Online",
@@ -197,19 +174,5 @@ export const getAllOrders = async (req,res) => {
     } catch (error) {
         console.log(error.message)
         res.json({success:false,message:error.message});
-    }
-}
-
-export const getSellerOrders = async (req, res) => {
-    try {
-        const sellerId = req.sellerId; 
-        const orders = await Order.find({
-            "items.sellerId": sellerId,
-            $or: [{ paymentType: "COD" }, { isPaid: true }]
-        }).populate("items.product address").sort({ createdAt: -1 });
-
-        res.json({ success: true, orders });
-    } catch (error) {
-        res.json({ success: false, message: error.message });
     }
 }
