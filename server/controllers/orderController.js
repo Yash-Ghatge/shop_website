@@ -5,37 +5,34 @@ import stripe from 'stripe';
 
 
 
-export const placeOrderCOD = async (req, res) => {
+export const placeOrderCOD = async (req,res) => {
     try {
-        const userId = req.userId;
+        const  userId  = req.userId;
         const { items, address } = req.body;
-
-        if (!address || items.length === 0) {
-            return res.json({ success: false, message: "Invalid data" });
+        if(!address || !items.length === 0 ){
+            return res.json({success:false,message:"Invaild data"})
         }
 
-        
-        let amount = await finalItems.reduce(async (acc, item) => {
+        let amount = await items.reduce(async (acc,item) => {
             const product = await Product.findById(item.product);
-            return (await acc) + product.offerPrice * item.quantity;
-        }, 0);
-        amount += Math.floor(amount * 0.02); 
+            return (await acc) + product.offerPrice*item.quantity;
+        },0)
+        amount+=Math.floor(amount*0.02)
 
-    
         await Order.create({
             userId,
             items,
             amount,
             address,
-            paymentType: "COD",
+            paymentType:"COD",
         });
 
-        return res.json({ success: true, message: "Order Placed Successfully" });
+        return res.json({success:true,message:"Order Placed Successfully"})
     } catch (error) {
-        console.log(error.message);
-        res.json({ success: false, message: error.message });
+        console.log(error.message)
+        res.json({success:false,message:error.message});
     }
-};
+} 
 
 
 export const placeOrderStripe = async (req,res) => {
