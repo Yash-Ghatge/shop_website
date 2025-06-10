@@ -5,34 +5,51 @@ import stripe from 'stripe';
 
 
 
-export const placeOrderCOD = async (req,res) => {
+export const placeOrderCOD = async (req, res) => {
     try {
-        const  userId  = req.userId;
+        const userId = req.userId;
         const { items, address } = req.body;
-        if(!address || !items.length === 0 ){
-            return res.json({success:false,message:"Invaild data"})
+
+        if (!address || items.length === 0) {
+            return res.json({ success: false, message: "Invalid data" });
         }
 
-        let amount = await items.reduce(async (acc,item) => {
+        
+        let finalItems = await Promise.all(items.map(async (item) => {
             const product = await Product.findById(item.product);
-            return (await acc) + product.offerPrice*item.quantity;
-        },0)
-        amount+=Math.floor(amount*0.02)
+            if (!product) {
+                throw new Error(`Product not found: ${item.product}`);
+            }
+            return {
+                product: item.product,
+                quantity: item.quantity,
+                sellerId: product.sellerId 
+            };
+        }));
 
+        
+        let amount = await finalItems.reduce(async (acc, item) => {
+            const product = await Product.findById(item.product);
+            return (await acc) + product.offerPrice * item.quantity;
+        }, 0);
+        amount += Math.floor(amount * 0.02); 
+
+    
         await Order.create({
             userId,
-            items,
+            items: finalItems,
             amount,
             address,
-            paymentType:"COD",
+            paymentType: "COD",
         });
 
-        return res.json({success:true,message:"Order Placed Successfully"})
+        return res.json({ success: true, message: "Order Placed Successfully" });
     } catch (error) {
-        console.log(error.message)
-        res.json({success:false,message:error.message});
+        console.log(error.message);
+        res.json({ success: false, message: error.message });
     }
-}
+};
+
 
 export const placeOrderStripe = async (req,res) => {
     try {
@@ -44,6 +61,17 @@ export const placeOrderStripe = async (req,res) => {
         if(!address || !items.length === 0 ){
             return res.json({success:false,message:"Invaild data"})
         }
+        let finalItems = await Promise.all(items.map(async (item) => {
+            const product = await Product.findById(item.product);
+            if (!product) {
+                throw new Error(`Product not found: ${item.product}`);
+            }
+            return {
+                product: item.product,
+                quantity: item.quantity,
+                sellerId: product.sellerId 
+            };
+        }));
 
         let productData = [];
 
@@ -60,7 +88,7 @@ export const placeOrderStripe = async (req,res) => {
 
         const order = await Order.create({
             userId,
-            items,
+            items:finalItems,
             amount,
             address,
             paymentType:"Online",
@@ -169,5 +197,19 @@ export const getAllOrders = async (req,res) => {
     } catch (error) {
         console.log(error.message)
         res.json({success:false,message:error.message});
+    }
+}
+
+export const getSellerOrders = async (req, res) => {
+    try {
+        const sellerId = req.sellerId; 
+        const orders = await Order.find({
+            "items.sellerId": sellerId,
+            $or: [{ paymentType: "COD" }, { isPaid: true }]
+        }).populate("items.product address").sort({ createdAt: -1 });
+
+        res.json({ success: true, orders });
+    } catch (error) {
+        res.json({ success: false, message: error.message });
     }
 }
