@@ -65,7 +65,7 @@ It includes **product browsing, cart management, secure authentication, and orde
 |-------------|------------------|
 | ![Homepage](./client/src/assets/Home.png) | ![Product](./client/src/assets/Cart.png) |
 
-| **Cart Page** | **Checkout Page** |
+| **Cart Page** | **Admin Page** |
 |--------------|-------------------|
 | ![Cart](./client/src/assets/Cart1.png) | ![Checkout](./client/src/assets/admin.png) |
 
@@ -80,31 +80,9 @@ It includes **product browsing, cart management, secure authentication, and orde
 
 ---
 
-## 🎓 **Education**
-**Bachelor of Science in Information Technology**  
-📍 Sandesh College of Arts, Commerce, and Science *(Mumbai University)*  
-🎓 **Completed**
-
----
-
-## 🎯 **Goals**
-- Build impactful products that solve real-world problems  
-- Contribute to meaningful **open-source projects**  
-- Master **full-stack development** with modern architectures  
-- Explore **AI-powered application development**  
-
----
-
-## 📊 **GitHub Stats**
-
-![Yash's GitHub Stats](https://github-readme-stats.vercel.app/api?username=Yash-Ghatge&show_icons=true&theme=radical)  
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=Yash-Ghatge&layout=compact&theme=radical)
-
----
-
 ## 🤝 **Connect With Me**
-🌐 **Portfolio** → [Your Portfolio Link](#)  
-💼 **LinkedIn** → [Your LinkedIn Profile](#)  
-📧 **Gmail** → [yashghatge012@gmail.com](mailto:yashghatge012@gmail.com)
+🌐 [**Portfolio**](https://my-portfolio-git-main-yash-ghatges-projects.vercel.app/)  
+💼 [**LinkedIn**](https://www.linkedin.com/in/yash-ghatge-4a44252a9/)  
+📧 [**Gmail**](mailto:yashghatge012@gmail.com)
 
 ---
