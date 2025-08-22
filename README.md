@@ -59,19 +59,15 @@ It includes **product browsing, cart management, secure authentication, and orde
 
 ## 🖼 **Project Screenshots**
 
-> Showcase your website visually here! Add some screenshots of your project.
+
 
 | **Homepage** | **Product Page** |
 |-------------|------------------|
-| ![Homepage](./screenshots/homepage.png) | ![Product](./screenshots/product.png) |
+| ![Homepage](./client/src/assets/Home.png) | ![Product](./client/src/assets/Cart.png) |
 
 | **Cart Page** | **Checkout Page** |
 |--------------|-------------------|
-| ![Cart](./screenshots/cart.png) | ![Checkout](./screenshots/checkout.png) |
-
-> **Tip:**  
-Create a `screenshots` folder in your project root and add images there.  
-Then replace the above paths accordingly.
+| ![Cart](./client/src/assets/Cart1.png) | ![Checkout](./client/src/assets/Checkout.png) |
 
 ---
 
