@@ -1,10 +1,10 @@
 # 🛍️ E-Commerce Website  
 
-![GitHub Repo Size](https://img.shields.io/github/repo-size/Yash-Ghatge/E-commerce-Website?color=blue)
-![GitHub Stars](https://img.shields.io/github/stars/Yash-Ghatge/E-commerce-Website?style=social)
-![GitHub Forks](https://img.shields.io/github/forks/Yash-Ghatge/E-commerce-Website?style=social)
-![Issues](https://img.shields.io/github/issues/Yash-Ghatge/E-commerce-Website)
-![License](https://img.shields.io/github/license/Yash-Ghatge/E-commerce-Website?color=green)
+![GitHub Repo Size](https://img.shields.io/github/repo-size/Yash-Ghatge/shop_website?color=blue)
+![GitHub Stars](https://img.shields.io/github/stars/Yash-Ghatge/shop_website?style=social)
+![GitHub Forks](https://img.shields.io/github/forks/Yash-Ghatge/shop_website?style=social)
+![Issues](https://img.shields.io/github/issues/Yash-Ghatge/shop_website)
+![License](https://img.shields.io/github/license/Yash-Ghatge/shop_website?color=green)
 
 ---
 
