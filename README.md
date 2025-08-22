@@ -67,7 +67,7 @@ It includes **product browsing, cart management, secure authentication, and orde
 
 | **Cart Page** | **Checkout Page** |
 |--------------|-------------------|
-| ![Cart](./client/src/assets/Cart1.png) | ![Checkout](./client/src/assets/Checkout.png) |
+| ![Cart](./client/src/assets/Cart1.png) | ![Checkout](./client/src/assets/admin.png) |
 
 ---
 
